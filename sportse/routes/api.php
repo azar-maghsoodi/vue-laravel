@@ -23,9 +23,10 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
 
-
-Route::post('get-private-message-notifications','PrivateMessageController@getUserNotifications');
-Route::post('get-private-messages','PrivateMessageController@getPrivateMessages');
-Route::post('get-private-message','PrivateMessageController@getPrivateMessageById');
-Route::post('get-private-messages-sent','PrivateMessageController@getPrivateMessageSent');
-Route::post('send-private-message','PrivateMessageController@sendPrivateMessage');
+Route::group(['middleware' => 'auth:api'], function () {
+	Route::post('get-private-message-notifications','PrivateMessageController@getUserNotifications');
+	Route::post('get-private-messages','PrivateMessageController@getPrivateMessages');
+	Route::post('get-private-message','PrivateMessageController@getPrivateMessageById');
+	Route::post('get-private-messages-sent','PrivateMessageController@getPrivateMessageSent');
+	Route::post('send-private-message','PrivateMessageController@sendPrivateMessage');
+});
